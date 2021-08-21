@@ -1,9 +1,9 @@
+# exploration file! just to try out a few diffrent inputs quickly
 from ctypes import CDLL, POINTER, c_int, byref, c_ubyte
-so_file = "/home/trotzinger/garmin_question/simple_compress.so"
+so_file = "/home/trotzinger/compress_test/simple_compress.so"
 
 simple_compress = CDLL(so_file)
 simple_compress.argtypes = [POINTER(c_ubyte), c_int]
-#data_size = c_int(4)
 # test simple pos path no compression
 data_ptr1 = (c_ubyte * 4)(c_ubyte(0x22),c_ubyte(0x33),c_ubyte(0x44),c_ubyte(0x55))
 # test simple pos path with compression
@@ -20,8 +20,6 @@ data_ptr5 = (c_ubyte * 9)(c_ubyte(0x22),c_ubyte(0x22),c_ubyte(0x22),c_ubyte(0x22
 data_ptr6 = (c_ubyte * 4)(c_ubyte(0xAA),c_ubyte(0xBB),c_ubyte(0xCC),c_ubyte(0xDD))
 # test numbers too large no compression
 data_ptr7 = (c_ubyte * 4)(c_ubyte(0xAA),c_ubyte(0xAA),c_ubyte(0xAA),c_ubyte(0xAA))
-
-#data_ptr3 = (c_ubyte * 4)(c_ubyte(0x22),c_ubyte(0x22),c_ubyte(0x22),c_ubyte(0x22))
 
 def results(data_ptr):
     print(simple_compress.simple_compress(byref(data_ptr), data_ptr._length_))
